@@ -8,44 +8,46 @@ document.addEventListener("DOMContentLoaded", getTodos)
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteCheck);
 
-
-
 // Functions
 function addTodo(e) {
     // Remove default event on button
     e.preventDefault()
 
-    // Add a todoDiv
-    const todoDiv = document.createElement("div")
-    todoDiv.classList.add("todo")
+    // Check empty input todo
+    if (todoInput.value === "") {
+        todoInput.setAttribute("placeholder", "Entrez un nouvel élément")
+    } else {
+        // Add a todoDiv
+        const todoDiv = document.createElement("div")
+        todoDiv.classList.add("todo")
 
+        // Add a li element
+        const newTodo = document.createElement("li")
+        newTodo.innerHTML = todoInput.value
+        newTodo.classList.add("todo-item", "col", "s10")
+        // Add this todo in local storage
+        saveLocalTodos(todoInput.value)
+        // li into div todo
+        todoDiv.appendChild(newTodo)
 
-    // Add button checked
-    const completeButton = document.createElement("button")
-    completeButton.innerHTML = "<i class='material-icons small'>check</i>"
-    completeButton.classList.add("complete-btn", "btn-small")
-    // button checked into todoDiv
-    todoDiv.appendChild(completeButton)
+        // Add button checked
+        const completeButton = document.createElement("button")
+        completeButton.innerHTML = "<i class='material-icons small'>check</i>"
+        completeButton.classList.add("complete-btn", "btn-small", "col", "s1")
+        // button checked into todoDiv
+        todoDiv.appendChild(completeButton)
 
-    // Delete button checked
-    const trashButton = document.createElement("button")
-    trashButton.innerHTML = "<i class='material-icons small'>close</i>"
-    trashButton.classList.add("trash-btn", "btn-small", "red")
-    // button trash into todoDiv
-    todoDiv.appendChild(trashButton)
+        // Delete button checked
+        const trashButton = document.createElement("button")
+        trashButton.innerHTML = "<i class='material-icons small'>close</i>"
+        trashButton.classList.add("trash-btn", "btn-small", "red", "col", "s1")
+        // button trash into todoDiv
+        todoDiv.appendChild(trashButton)
 
-    // Add a li element
-    const newTodo = document.createElement("li")
-    newTodo.innerHTML = todoInput.value
-    newTodo.classList.add("todo-item")
-    // Add this todo in local storage
-    saveLocalTodos(todoInput.value)
-    // li into div todo
-    todoDiv.appendChild(newTodo)
-
-    // Add the new todo into Todo List
-    todoList.appendChild(todoDiv)
-    todoInput.value = ""
+        // Add the new todo into Todo List
+        todoList.appendChild(todoDiv)
+        todoInput.value = ""
+    }
 
 }
 
@@ -56,7 +58,7 @@ function deleteCheck(e) {
     if (item.classList[0] === "trash-btn") {
         const todo = item.parentElement
         todo.classList.add("fade-out-right")
-        removeLocalStorage(todo)
+        removeLocalTodos(todo)
         todo.addEventListener("transitionend", function () {
             todo.remove()
         })
@@ -74,7 +76,7 @@ function deleteCheck(e) {
 function saveLocalTodos(todo) {
     // Checking if existing items
 
-    let todos;
+    let todos
     if (localStorage.getItem("todos") === null) {
         todos = []
     } else {
@@ -86,7 +88,7 @@ function saveLocalTodos(todo) {
 
 }
 
-function getTodos(todo) {
+function getTodos() {
     let todos;
     if (localStorage.getItem("todos") === null) {
         todos = []
@@ -100,27 +102,27 @@ function getTodos(todo) {
         const todoDiv = document.createElement("div")
         todoDiv.classList.add("todo")
 
+        // Add a li element
+        const newTodo = document.createElement("li")
+        newTodo.innerHTML = todo
+        newTodo.classList.add("todo-item", "col", "s10")
+        // li into div todo
+        todoDiv.appendChild(newTodo)
 
         // Add button checked
         const completeButton = document.createElement("button")
         completeButton.innerHTML = "<i class='material-icons small'>check</i>"
-        completeButton.classList.add("complete-btn", "btn-small")
+        completeButton.classList.add("complete-btn", "btn-small", "col", "s1")
         // button checked into todoDiv
         todoDiv.appendChild(completeButton)
 
         // Delete button checked
         const trashButton = document.createElement("button")
         trashButton.innerHTML = "<i class='material-icons small'>close</i>"
-        trashButton.classList.add("trash-btn", "btn-small", "red")
+        trashButton.classList.add("trash-btn", "btn-small", "red", "col", "s1")
         // button trash into todoDiv
         todoDiv.appendChild(trashButton)
 
-        // Add a li element
-        const newTodo = document.createElement("li")
-        newTodo.innerHTML = todo
-        newTodo.classList.add("todo-item")
-        // li into div todo
-        todoDiv.appendChild(newTodo)
 
         // Add the new todo into Todo List
         todoList.appendChild(todoDiv)
@@ -128,14 +130,14 @@ function getTodos(todo) {
 
 }
 
-function removeLocalStorage(todo) {
-    let todos;
+function removeLocalTodos(todo) {
+    let todos
     if (localStorage.getItem("todos") === null) {
         todos = []
     } else {
         todos = JSON.parse(localStorage.getItem("todos"))
     }
-    const todoIndex = todo.children[0].innerText
+    const todoIndex = todo.children[0].innerHTML
     todos.splice(todos.indexOf(todoIndex), 1)
     localStorage.setItem("todos", JSON.stringify(todos))
 }

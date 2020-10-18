@@ -8,15 +8,22 @@
 
 body{
     background-color: beige;
+}
+.container{
+    margin: auto;
+}
+
+.todo-container{
     overflow: hidden;
 }
+
 .todo{
     display: flex;
     flex-direction: row;
     align-items: center;
     margin: 8px 0;
     padding: 8px 0;
-    transition: all 1s;
+    transition: all 0.4s;
 }
 .todo > *{
     margin-right: 24px;
@@ -27,15 +34,18 @@ button > i{
 }
 
 .completed{
-    text-decoration: line-through;
-    opacity: 0.5;
+    transform: scale(0.980);
+    opacity: 0.2;
+    transition: all 0.4s ease-in-out;
+    background-color: rgb(199, 199, 181);
+    border-radius: 16px;
 }
 
 .trash-btn{
-    transition: all 0.7s;
+    transition: all 0.5s ease-in-out;
 }
 
 .fade-out-right {
-	-webkit-animation: fade-out-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: fade-out-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	-webkit-animation: fade-out-right 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: fade-out-right 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
