@@ -57,7 +57,7 @@ function deleteCheck(e) {
     // Delete the parent 'todo' onclick 'trash-btn'
     if (item.classList[0] === "trash-btn") {
         const todo = item.parentElement
-        todo.classList.add("fade-out-right")
+        todo.classList.add("fade-out-bck")
         removeLocalTodos(todo)
         todo.addEventListener("transitionend", function () {
             todo.remove()
