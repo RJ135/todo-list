@@ -7,25 +7,31 @@
     <!-- materialize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 
     <title>Todo List</title>
 </head>
 
 <body>
     <div class="container">
-        <h3 class="title">Mes tâches</h3>
-
-        <!-- input zone -->
-        <input type="text" name="" id="inputText">
-
-        <!-- buttons -->
-        <button id="add-task" class="btn waves-effect waves-light" type="submit" name="action">Add</button>
-
-
-        <!-- Display tasks list -->
-        <ul id="list"></ul>
-
-
+        <header>
+            <h3 class="title">Ma todo list</h3>
+        </header>
+        <!-- formulaire btn + input -->
+        <form>
+            <input type="text" class="todo-input">
+            <button class="todo-button btn-small waves-effect waves-light grey darken-4" type="submit">ajouter
+                <i class="left material-icons">add</i>
+            </button>
+        </form>
+        <!-- zone affichage liste todo -->
+        <div class="todo-container">
+            <ul class="todo-list">
+            </ul>
+        </div>
+        <!-- <li class="task"><i class="delete-task material-icons red-text small">clear</i>task 1
+                </li> -->
 
     </div>
 

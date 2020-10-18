@@ -1,0 +1,41 @@
+@import 'keyframes.css';
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: beige;
+    overflow: hidden;
+}
+.todo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 8px 0;
+    padding: 8px 0;
+    transition: all 1s;
+}
+.todo > *{
+    margin-right: 24px;
+}
+
+button > i{
+    pointer-events : none;
+}
+
+.completed{
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.trash-btn{
+    transition: all 0.7s;
+}
+
+.fade-out-right {
+	-webkit-animation: fade-out-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: fade-out-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}

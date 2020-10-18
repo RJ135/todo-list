@@ -1,15 +1,141 @@
-const list = document.getElementById('list')
-// const inputText = document.querySelector('.text-input')
-const btn = document.getElementById('add-task');
-//const task = document.querySelector('.task');
+// Selectors
+const todoInput = document.querySelector('.todo-input')
+const todoButton = document.querySelector('.todo-button')
+const todoList = document.querySelector('.todo-list')
+
+// Listeners
+document.addEventListener("DOMContentLoaded", getTodos)
+todoButton.addEventListener("click", addTodo);
+todoList.addEventListener("click", deleteCheck);
 
 
-// ADD TASK
-btn.addEventListener('click', function () {
-    const inputText = document.getElementById('inputText').value
-    const newTask = document.createElement('li')
-    //classList
-    newTask.innerHTML = inputText
-    list.prepend(newTask)
-    document.getElementById("inputText").value = ""
-})
+
+// Functions
+function addTodo(e) {
+    // Remove default event on button
+    e.preventDefault()
+
+    // Add a todoDiv
+    const todoDiv = document.createElement("div")
+    todoDiv.classList.add("todo")
+
+
+    // Add button checked
+    const completeButton = document.createElement("button")
+    completeButton.innerHTML = "<i class='material-icons small'>check</i>"
+    completeButton.classList.add("complete-btn", "btn-small")
+    // button checked into todoDiv
+    todoDiv.appendChild(completeButton)
+
+    // Delete button checked
+    const trashButton = document.createElement("button")
+    trashButton.innerHTML = "<i class='material-icons small'>close</i>"
+    trashButton.classList.add("trash-btn", "btn-small", "red")
+    // button trash into todoDiv
+    todoDiv.appendChild(trashButton)
+
+    // Add a li element
+    const newTodo = document.createElement("li")
+    newTodo.innerHTML = todoInput.value
+    newTodo.classList.add("todo-item")
+    // Add this todo in local storage
+    saveLocalTodos(todoInput.value)
+    // li into div todo
+    todoDiv.appendChild(newTodo)
+
+    // Add the new todo into Todo List
+    todoList.appendChild(todoDiv)
+    todoInput.value = ""
+
+}
+
+function deleteCheck(e) {
+    const item = e.target
+
+    // Delete the parent 'todo' onclick 'trash-btn'
+    if (item.classList[0] === "trash-btn") {
+        const todo = item.parentElement
+        todo.classList.add("fade-out-right")
+        removeLocalStorage(todo)
+        todo.addEventListener("transitionend", function () {
+            todo.remove()
+        })
+    }
+
+    // Checked todo
+    if (item.classList[0] === "complete-btn") {
+        item.parentElement.classList.toggle("completed");
+    }
+
+}
+
+// LOCALSTORAGE Functions
+
+function saveLocalTodos(todo) {
+    // Checking if existing items
+
+    let todos;
+    if (localStorage.getItem("todos") === null) {
+        todos = []
+    } else {
+        todos = JSON.parse(localStorage.getItem("todos"))
+    }
+
+    todos.push(todo)
+    localStorage.setItem("todos", JSON.stringify(todos))
+
+}
+
+function getTodos(todo) {
+    let todos;
+    if (localStorage.getItem("todos") === null) {
+        todos = []
+    } else {
+        todos = JSON.parse(localStorage.getItem("todos"))
+
+    }
+
+    todos.forEach(function (todo) {
+        // Add a todoDiv
+        const todoDiv = document.createElement("div")
+        todoDiv.classList.add("todo")
+
+
+        // Add button checked
+        const completeButton = document.createElement("button")
+        completeButton.innerHTML = "<i class='material-icons small'>check</i>"
+        completeButton.classList.add("complete-btn", "btn-small")
+        // button checked into todoDiv
+        todoDiv.appendChild(completeButton)
+
+        // Delete button checked
+        const trashButton = document.createElement("button")
+        trashButton.innerHTML = "<i class='material-icons small'>close</i>"
+        trashButton.classList.add("trash-btn", "btn-small", "red")
+        // button trash into todoDiv
+        todoDiv.appendChild(trashButton)
+
+        // Add a li element
+        const newTodo = document.createElement("li")
+        newTodo.innerHTML = todo
+        newTodo.classList.add("todo-item")
+        // li into div todo
+        todoDiv.appendChild(newTodo)
+
+        // Add the new todo into Todo List
+        todoList.appendChild(todoDiv)
+    })
+
+}
+
+function removeLocalStorage(todo) {
+    let todos;
+    if (localStorage.getItem("todos") === null) {
+        todos = []
+    } else {
+        todos = JSON.parse(localStorage.getItem("todos"))
+    }
+    const todoIndex = todo.children[0].innerText
+    todos.splice(todos.indexOf(todoIndex), 1)
+    localStorage.setItem("todos", JSON.stringify(todos))
+}
