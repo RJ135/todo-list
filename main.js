@@ -72,7 +72,6 @@ function deleteCheck(e) {
 }
 
 // LOCALSTORAGE Functions
-
 function saveLocalTodos(todo) {
     // Checking if existing items
 
